@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import LoginForm from './components/LoginForm.vue'
 
 // 模拟商品数据
 const products = [
@@ -91,6 +92,21 @@ const goToPublish = () => {
   console.log('跳转到发布商品页面')
   // 这里可以添加跳转逻辑
 }
+
+// 登录表单显示状态
+const loginVisible = ref(false)
+
+// 打开登录表单
+const openLoginForm = () => {
+  loginVisible.value = true
+  console.log('打开登录表单')
+}
+
+// 处理登录成功事件
+const handleLoginSuccess = (userInfo) => {
+  console.log('登录成功，用户信息:', userInfo)
+  // 这里可以添加登录成功后的逻辑，如更新用户状态、刷新页面等
+}
 </script>
 
 <template>
@@ -111,7 +127,7 @@ const goToPublish = () => {
           <el-button type="primary" @click="handleSearch">搜索</el-button>
         </div>
         <div class="nav-actions">
-          <el-button type="default" icon="el-icon-user">登录</el-button>
+          <el-button type="default" icon="el-icon-user" @click="openLoginForm">登录</el-button>
           <el-button type="default" icon="el-icon-register">注册</el-button>
           <el-button type="success" icon="el-icon-upload" @click="goToPublish">发布</el-button>
           <el-button type="default" icon="el-icon-shopping-cart">
@@ -240,6 +256,9 @@ const goToPublish = () => {
         <p>© 2024 U-Circle二手交易平台 版权所有</p>
       </div>
     </footer>
+
+    <!-- 登录表单组件 -->
+    <LoginForm :visible="loginVisible" @login-success="handleLoginSuccess" @close="loginVisible = false" />
   </div>
 </template>
 
